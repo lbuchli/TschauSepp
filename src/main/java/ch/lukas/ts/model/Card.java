@@ -1,6 +1,9 @@
 package ch.lukas.ts.model;
 
 public class Card {
+
+	private static final String CARD_PATH = "cards/";
+	
 	private final CardValue value;
 	private final CardColor color;
 	
@@ -10,7 +13,15 @@ public class Card {
 	}
 	
 	public String getImageFileName() {
-		return null; // TODO
+		return CARD_PATH + color.getImageID() + value.getImageID() + ".png";
+	}
+	
+	public static String getBackFileName() {
+		return CARD_PATH + "card_back.png";
+	}
+	
+	public static String getPlaceholderFileName() {
+		return CARD_PATH + "placeholder.png";
 	}
 
 	public CardValue getValue() {

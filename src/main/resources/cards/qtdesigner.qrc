@@ -1,0 +1,10 @@
+<RCC>
+  <qresource>
+    <file>ca.png</file>
+    <file>card_back.png</file>
+    <file>d3.png</file>
+    <file>hj.png</file>
+    <file>s8.png</file>
+    <file>s4.png</file>
+  </qresource>
+</RCC>

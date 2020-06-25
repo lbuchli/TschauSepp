@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
 import ch.lukas.ts.control.GameController;
+import ch.lukas.ts.control.PlayerController;
 
 public class GameView extends JPanel {
 
@@ -15,7 +16,13 @@ public class GameView extends JPanel {
 	private PlayerPanel playerPanel;
 	
 	public GameView() {
-		super(new BorderLayout());
-		// TODO
+		setLayout(new BorderLayout());
+		controller = new GameController();
+		
+		cardDeckPanel = new CardDeckPanel();
+		playerPanel = new PlayerPanel();
+		
+		add(cardDeckPanel, BorderLayout.NORTH);
+		add(playerPanel, BorderLayout.SOUTH);
 	}
 }

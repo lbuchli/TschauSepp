@@ -10,10 +10,10 @@ public enum CardValue {
 	VALUE_8(8, "8"),
 	VALUE_9(9, "9"),
 	VALUE_10(10, "10"),
-	VALUE_JACK(10, "J"),
-	VALUE_QUEEN(10, "Q"),
-	VALUE_KING(10, "K"),
-	VALUE_ACE(10, "A");
+	VALUE_JACK(10, "j"),
+	VALUE_QUEEN(10, "q"),
+	VALUE_KING(10, "k"),
+	VALUE_ACE(10, "a");
 
 	private final int points;
 	private final String imageID;

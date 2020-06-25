@@ -2,21 +2,31 @@ package ch.lukas.ts.control;
 
 import java.awt.event.ActionListener;
 
-public class PlayerController {
+import javax.swing.event.ListSelectionListener;
 
-	public ActionListener getCardChooseListener() {
-		return (e) -> {}; // TODO
-	}
+import ch.lukas.ts.model.TschauSepp;
+
+public class PlayerController {
 	
 	public ActionListener getTschauListener() {
-		return (e) -> {}; // TODO
+		return (e) -> TschauSepp.getInstance().getCurrentGame().toggleTschau();
 	}
 	
 	public ActionListener getSeppListener() {
-		return (e) -> {}; // TODO
+		return (e) -> TschauSepp.getInstance().getCurrentGame().toggleSepp();
 	}
 	
 	public ActionListener getFinishMoveListener() {
-		return (e) -> {}; // TODO
+		return (e) -> TschauSepp.getInstance().getCurrentGame().nextPlayer();
+	}
+	
+	public ListSelectionListener getCardChooseListener() {
+		return (e) -> {
+			boolean moveWasValid = TschauSepp.getInstance()
+					.getCurrentGame()
+					.getCurrentPlayer()
+					.playCard(e.getFirstIndex());
+			TschauSepp.getInstance().getCurrentGame().setHasPlayedOrPickedUp(moveWasValid);
+		};
 	}
 }
