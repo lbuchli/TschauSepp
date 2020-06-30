@@ -22,11 +22,10 @@ public class PlayerController {
 	
 	public ListSelectionListener getCardChooseListener() {
 		return (e) -> {
-			boolean moveWasValid = TschauSepp.getInstance()
+			TschauSepp.getInstance()
 					.getCurrentGame()
 					.getCurrentPlayer()
 					.playCard(e.getFirstIndex());
-			TschauSepp.getInstance().getCurrentGame().setHasPlayedOrPickedUp(moveWasValid);
 		};
 	}
 }

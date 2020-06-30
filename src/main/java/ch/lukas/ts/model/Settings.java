@@ -8,7 +8,7 @@ public class Settings {
 	private static Settings instance;
 	private int playerCount = 4;
 	private List<CardValue> specialEnabled;
-	private int finishPoints = 200;
+	private int finishPoints = 400;
 	
 	private Settings() {
 		specialEnabled = new ArrayList<CardValue>();

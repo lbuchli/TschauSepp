@@ -84,15 +84,10 @@ public class CardDeck {
 	
 	private boolean cardPlayable(Card card) {
 		if (spentCards.size() > 0) {
-			Card lastCard = spareCards.get(spareCards.size()-1);
+			Card lastCard = spentCards.get(spentCards.size()-1);
 			
-			if (card.getColor().equals(lastCard.getColor()) 
-				|| card.getValue().equals(lastCard.getValue())) {
-				
-				return true;
-			} else {
-				return false;
-			}
+			return card.getColor().equals(lastCard.getColor()) 
+				|| card.getValue().equals(lastCard.getValue());
 		}
 		return true;
 	}

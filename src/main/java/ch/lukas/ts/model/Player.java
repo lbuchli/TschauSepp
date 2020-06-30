@@ -12,6 +12,7 @@ public class Player extends DefaultListModel<Card> {
 	private List<Card> handCards;
 	private CardDeck deck;
 	private int score;
+	private boolean hasPlayedOrPickedUp;
 	
 	public Player(CardDeck deck) {
 		handCards = new ArrayList<Card>();
@@ -21,13 +22,14 @@ public class Player extends DefaultListModel<Card> {
 	
 	public void pickUpCard() {
 		addElement(deck.pickUpCard());
+		setHasPlayedOrPickedUp(true);
 	}
 	
 	public boolean playCard(int index) {
 		if (index < handCards.size() && deck.playCard(handCards.get(index))) {
 			handCards.remove(index);
 			fireContentsChanged(this, 0, handCards.size()+1);
-			TschauSepp.getInstance().getCurrentGame().setHasPlayedOrPickedUp(true);
+			setHasPlayedOrPickedUp(true);
 			return true;
 		}
 		
@@ -76,5 +78,13 @@ public class Player extends DefaultListModel<Card> {
 			fireContentsChanged(this, 0, handCards.size());
 		}
 		return found;
+	}
+
+	public boolean getHasPlayedOrPickedUp() {
+		return hasPlayedOrPickedUp;
+	}
+
+	public void setHasPlayedOrPickedUp(boolean hasPlayedOrPickedUp) {
+		this.hasPlayedOrPickedUp = hasPlayedOrPickedUp;
 	}
 }

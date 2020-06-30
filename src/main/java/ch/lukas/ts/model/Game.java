@@ -13,7 +13,6 @@ public class Game {
 	
 	private boolean isTschauChecked;
 	private boolean isSeppChecked;
-	private boolean hasPlayedOrPickedUp;
 	
 	private int currentPlayer = 0;
 	
@@ -42,13 +41,27 @@ public class Game {
 	}
 	
 	public void nextPlayer() {
-		if (hasPlayedOrPickedUp) {
+		Player current = players.get(currentPlayer);
+		if (current.getHasPlayedOrPickedUp()) {
+			checkTschauAndSepp(current);
+			if (current.getHandCards().size() == 0) {
+				int score = players.parallelStream().mapToInt((p) -> p.calcHandScore()).sum();
+				for (Player p : players) {
+					if (p == current) {
+						current.endRound(score);
+					} else {
+						p.endRound(0);
+					}
+				}
+				deck.reshuffle();
+			}
+
+			current.setHasPlayedOrPickedUp(false);
 			currentPlayer = (currentPlayer + 1) % Settings.getInstance().getPlayerCount();
 			Player nextPlayer = players.get(currentPlayer);
 			playerChangeListeners.forEach((listener) -> listener.onPlayerChange(nextPlayer));
 			isTschauChecked = false;
 			isSeppChecked = false;
-			hasPlayedOrPickedUp = false;
 		}
 	}
 	
@@ -72,11 +85,21 @@ public class Game {
 		return players.indexOf(p) + 1;
 	}
 	
-	public void setHasPlayedOrPickedUp(boolean val) {
-		hasPlayedOrPickedUp = val;
-	}
-	
 	public CardDeck getDeck() {
 		return deck;
+	}
+	
+	private void checkTschauAndSepp(Player current) {
+		int cardCount = current.getHandCards().size();
+		if ((cardCount != 1 && isTschauChecked) || (cardCount == 1 && !isTschauChecked)) {
+			for (int i = 0; i < 2; i++) {
+				current.pickUpCard();
+			}
+		}
+		if ((cardCount != 0 && isSeppChecked) || (cardCount == 0 && !isSeppChecked)) {
+			for (int i = 0; i < 4; i++) {
+				current.pickUpCard();
+			}
+		}
 	}
 }
