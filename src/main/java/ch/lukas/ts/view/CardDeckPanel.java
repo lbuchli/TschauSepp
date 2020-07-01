@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 
 import ch.lukas.ts.control.DeckController;
@@ -39,7 +41,7 @@ public class CardDeckPanel extends JPanel {
 			
 			spareCard.addMouseListener(controller.getCardPickupListener());
 			
-			add(spareCard, BorderLayout.EAST);
+			add(spareCard, BorderLayout.CENTER);
 			add(lastPlayedCard, BorderLayout.WEST);
 		} catch (IOException e) {
 			// well sh*t
@@ -62,5 +64,10 @@ public class CardDeckPanel extends JPanel {
 				}
 			}
 		});
+		
+		DefaultListModel<String> scoreboardModel = new DefaultListModel<>();
+		JList<String> scoreboard = new JList<>(scoreboardModel);
+		controller.updateScoreboard(scoreboardModel);
+		add(scoreboard, BorderLayout.EAST);
 	}
 }

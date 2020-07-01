@@ -27,7 +27,7 @@ public class Game {
 			for (int j = 0; j < HAND_CARDS; j++) {
 				player.pickUpCard();
 			}
-			players.add(new Player(deck));
+			players.add(player);
 		}
 	}
 	
@@ -66,10 +66,6 @@ public class Game {
 	}
 	
 	public void toggleTschau() {
-		// this is kind of ugly because the two states (isTschauChecked and checkbox) could
-		// get out of sync. It is still the most elegant solution using swing as far as I know,
-		// because it's not easily possible to get the checkbox state from its ActionEvent.
-		// I really love swing.
 		isTschauChecked = !isTschauChecked;
 	}
 	
@@ -87,6 +83,10 @@ public class Game {
 	
 	public CardDeck getDeck() {
 		return deck;
+	}
+	
+	public List<Player> getPlayers() {
+		return players;
 	}
 	
 	private void checkTschauAndSepp(Player current) {

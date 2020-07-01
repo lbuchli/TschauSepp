@@ -24,7 +24,7 @@ public class PlayerPanel extends JPanel {
 		controller = new PlayerController();
 		
 		handCards = new JList<Card>();
-		handCards.addListSelectionListener(controller.getCardChooseListener());
+		handCards.addMouseListener(controller.getCardChooseListener());
 		handCards.setCellRenderer(new CardListCellRenderer());
 		handCards.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		handCards.setVisibleRowCount(-1);
@@ -39,7 +39,7 @@ public class PlayerPanel extends JPanel {
 		seppBox.addActionListener(controller.getSeppListener());
 		doneButton.addActionListener(controller.getFinishMoveListener());
 		
-		TschauSepp.getInstance().getCurrentGame().addPlayerChangeListener((player) -> {
+		TschauSepp.getInstance().getCurrentGame().addPlayerChangeListener(player -> {
 			handCards.setModel(player);
 			
 			String name = String.valueOf(TschauSepp.getInstance().getCurrentGame().getPlayerNumber(player));

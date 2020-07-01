@@ -26,9 +26,12 @@ public class Player extends DefaultListModel<Card> {
 	}
 	
 	public boolean playCard(int index) {
-		if (index < handCards.size() && deck.playCard(handCards.get(index))) {
+		if (index < handCards.size() 
+				&& deck.playCard(handCards.get(index)) 
+				&& !hasPlayedOrPickedUp) {
+			
 			handCards.remove(index);
-			fireContentsChanged(this, 0, handCards.size()+1);
+			fireIntervalRemoved(this, index, index);
 			setHasPlayedOrPickedUp(true);
 			return true;
 		}
