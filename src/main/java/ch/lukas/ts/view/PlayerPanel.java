@@ -1,7 +1,11 @@
 package ch.lukas.ts.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -21,15 +25,17 @@ public class PlayerPanel extends JPanel {
 	
 	public PlayerPanel() {
 		setLayout(new BorderLayout());
+		setBackground(Color.WHITE);
 		controller = new PlayerController();
 		
 		handCards = new JList<Card>();
 		handCards.addMouseListener(controller.getCardChooseListener());
 		handCards.setCellRenderer(new CardListCellRenderer());
-		handCards.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		handCards.setLayoutOrientation(JList.VERTICAL_WRAP);
 		handCards.setVisibleRowCount(-1);
 		
 		JLabel playerName = new JLabel("<Unknown>");
+		playerName.setFont(new Font(playerName.getFont().getName(), Font.ITALIC, 16));
 		
 		JCheckBox tschauBox = new JCheckBox("Tschau");
 		JCheckBox seppBox = new JCheckBox("Sepp");
@@ -50,6 +56,9 @@ public class PlayerPanel extends JPanel {
 		});
 		
 		JPanel top = new JPanel();
+		top.setBackground(Color.WHITE);
+		tschauBox.setBackground(Color.WHITE);
+		seppBox.setBackground(Color.WHITE);
 		top.add(playerName);
 		top.add(tschauBox);
 		top.add(seppBox);

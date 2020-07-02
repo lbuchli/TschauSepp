@@ -18,21 +18,30 @@ public class Player extends DefaultListModel<Card> {
 		handCards = new ArrayList<Card>();
 		this.deck = deck;
 		score = 0;
+		hasPlayedOrPickedUp = false;
 	}
 	
 	public void pickUpCard() {
-		addElement(deck.pickUpCard());
-		setHasPlayedOrPickedUp(true);
+		if (!hasPlayedOrPickedUp) {
+			addElement(deck.pickUpCard());
+			setHasPlayedOrPickedUp(true);
+		}
 	}
 	
 	public boolean playCard(int index) {
 		if (index < handCards.size() 
-				&& deck.playCard(handCards.get(index)) 
-				&& !hasPlayedOrPickedUp) {
+				&& !hasPlayedOrPickedUp
+				&& deck.playCard(handCards.get(index))) {
 			
-			handCards.remove(index);
+			Card previous = deck.getLastPlayedCard();
+			Card played = handCards.remove(index);
 			fireIntervalRemoved(this, index, index);
-			setHasPlayedOrPickedUp(true);
+			
+			if (!played.getValue().equals(CardValue.ACE)
+					|| !Settings.getInstance().isSpecial(CardValue.ACE)) {
+				setHasPlayedOrPickedUp(true);
+			}
+			
 			return true;
 		}
 		
@@ -40,6 +49,9 @@ public class Player extends DefaultListModel<Card> {
 	}
 	
 	public void endRound(int points) {
+		int handCardSize = handCards.size();
+		handCards.clear();
+		fireIntervalRemoved(this, 0, handCardSize);
 		score = getScore() + points;
 	}
 	

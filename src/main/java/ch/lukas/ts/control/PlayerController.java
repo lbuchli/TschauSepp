@@ -9,21 +9,38 @@ import javax.swing.event.ListSelectionListener;
 
 import ch.lukas.ts.model.TschauSepp;
 
+/**
+ * Controller for the player section of the game GUI
+ * @author lukas
+ */
 public class PlayerController {
 	
+	/**
+	 * A listener for the "Tschau"-Checkbox
+	 * @return The listener
+	 */
 	public ActionListener getTschauListener() {
 		return e -> TschauSepp.getInstance().getCurrentGame().toggleTschau();
 	}
 	
+	/**
+	 * A listener for the "Sepp"-Checkbox
+	 * @return The listener
+	 */
 	public ActionListener getSeppListener() {
 		return e -> TschauSepp.getInstance().getCurrentGame().toggleSepp();
 	}
 	
+	/**
+	 * A listener for the "Fertig"-Button
+	 * @return The listener
+	 */
 	public ActionListener getFinishMoveListener() {
 		return e -> TschauSepp.getInstance().getCurrentGame().nextPlayer();
 	}
 	
 	/*
+	 * Only works half the time... very funny swing
 	public ListSelectionListener getCardChooseListener() {
 		return e -> {
 			TschauSepp.getInstance()
@@ -34,6 +51,10 @@ public class PlayerController {
 	}
 	*/
 	
+	/**
+	 * A listener for when the user chooses a hand card
+	 * @return The listener
+	 */
 	public MouseListener getCardChooseListener() {
 		return new MouseListener() {
 			

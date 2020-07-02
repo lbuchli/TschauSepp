@@ -4,8 +4,17 @@ import javax.swing.SwingUtilities;
 
 import ch.lukas.ts.view.TschauSeppWindow;
 
+/**
+ * The main class. Its sole purpose is to host the main method.
+ * @author lukas
+ *
+ */
 public class Main {
 
+	/**
+	 * The main method instantiates a "Tschau Sepp"-Window.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
 			TschauSeppWindow window = new TschauSeppWindow();

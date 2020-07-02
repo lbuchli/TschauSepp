@@ -1,6 +1,7 @@
 package ch.lukas.ts.view;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 
 import javax.swing.JFrame;
 
@@ -14,20 +15,20 @@ public class TschauSeppWindow extends JFrame {
 	
 	public TschauSeppWindow() {
 		CardLayout layout = new CardLayout();
-		//setLayout(layout);
+		getContentPane().setLayout(layout);
 		
 		gameView = new GameView();
-		settingView = new SettingView();
+		settingView = new SettingView(layout);
 		menuView = new MenuView(layout);
 		layout.addLayoutComponent(gameView, "game");
 		layout.addLayoutComponent(settingView, "settings");
 		layout.addLayoutComponent(menuView, "menu");
 		
-		
-		
-		//getContentPane().setLayout(layout);
-		//layout.show(getContentPane(), "game");
 		getContentPane().add(gameView);
+		getContentPane().add(settingView);
+		getContentPane().add(menuView);
+
+		layout.show(getContentPane(), "menu");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

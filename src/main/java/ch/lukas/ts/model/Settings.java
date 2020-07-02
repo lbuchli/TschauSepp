@@ -30,6 +30,10 @@ public class Settings {
 		specialEnabled.add(card);
 	}
 	
+	public void removeSpecialCard(CardValue card) {
+		specialEnabled.remove(card);
+	}
+	
 	public int getPlayerCount() {
 		return playerCount;
 	}

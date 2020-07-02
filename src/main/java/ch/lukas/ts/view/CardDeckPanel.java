@@ -1,6 +1,7 @@
 package ch.lukas.ts.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -10,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import ch.lukas.ts.control.DeckController;
 import ch.lukas.ts.model.Card;
@@ -27,6 +29,8 @@ public class CardDeckPanel extends JPanel {
 	public CardDeckPanel() {
 		this.controller = new DeckController();
 		setLayout(new BorderLayout());
+		setBorder(new EmptyBorder(20, 20, 20, 20));
+		setBackground(Color.WHITE);
 		try {
 			InputStream backStream = getClass()
 					.getClassLoader()

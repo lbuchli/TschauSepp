@@ -9,8 +9,17 @@ import javax.swing.DefaultListModel;
 import ch.lukas.ts.model.Player;
 import ch.lukas.ts.model.TschauSepp;
 
+/**
+ * Provides listeners and controls the card deck GUI section.
+ * @author lukas
+ *
+ */
 public class DeckController {
 
+	/**
+	 * A listener responsible for picking up a card when the user clicks on the spare cards.
+	 * @return the listener
+	 */
 	public MouseListener getCardPickupListener() {
 		return new MouseListener() {
 
@@ -34,6 +43,10 @@ public class DeckController {
 		};
 	}
 	
+	/**
+	 * Update a scoreboard when players get points
+	 * @param scoreboard The scoreboard to update
+	 */
 	public void updateScoreboard(DefaultListModel<String> scoreboard) {
 		List<Player> players = TschauSepp.getInstance().getCurrentGame().getPlayers();
 		TschauSepp.getInstance().getCurrentGame().addPlayerChangeListener(p -> {
