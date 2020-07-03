@@ -6,9 +6,13 @@ public class TschauSepp {
 	private Game currentGame;
 	
 	private TschauSepp() {
-		currentGame = new Game();
+		//currentGame = new Game();
 	}
 	
+	/**
+	 * Get a TschauSepp instance
+	 * @return The instance
+	 */
 	public static TschauSepp getInstance() {
 		if (instance == null) {
 			instance = new TschauSepp();
@@ -17,7 +21,18 @@ public class TschauSepp {
 		return instance;
 	}
 	
+	/**
+	 * Get the game currently played
+	 * @return The game
+	 */
 	public Game getCurrentGame() {
 		return currentGame;
+	}
+	
+	/**
+	 * Start a new game
+	 */
+	public void newGame() {
+		currentGame = new Game();
 	}
 }

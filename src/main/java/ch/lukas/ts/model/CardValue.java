@@ -1,5 +1,10 @@
 package ch.lukas.ts.model;
 
+/**
+ * Represents one of 13 possible card values.
+ * @author lukas
+ *
+ */
 public enum CardValue {
 	TWO(2, "2"),
 	THREE(3, "3"),
@@ -23,10 +28,18 @@ public enum CardValue {
 		this.imageID = imageID;
 	}
 	
+	/**
+	 * Get the points this value is worth
+	 * @return The amount of points it is worth
+	 */
 	public int getPoints() {
 		return points;
 	}
 	
+	/**
+	 * Get the image id of this value (used for image path building)
+	 * @return The ID
+	 */
 	public String getImageID() {
 		return imageID;
 	}

@@ -19,6 +19,10 @@ import javax.swing.border.EmptyBorder;
 import ch.lukas.ts.control.SettingController;
 import ch.lukas.ts.model.CardValue;
 
+/**
+ * The View where a user can configure game settings.
+ * @author lukas
+ */
 public class SettingView extends JPanel {
 
 	private static final long serialVersionUID = -1419034705199112926L;

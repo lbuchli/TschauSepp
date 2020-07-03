@@ -3,6 +3,10 @@ package ch.lukas.ts.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A game (A round until one player reaches max points)
+ * @author lukas
+ */
 public class Game {
 	
 	private final static int HAND_CARDS = 7;
@@ -38,55 +42,78 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * Cancel/finish the game
+	 */
 	public void cancel() {
 		gameDoneListeners.forEach(listener -> listener.onGameDone());
 	}
 	
+	/**
+	 * Add a PlayerChaneListener to get notified on player changes
+	 * @param listener The listener
+	 */
 	public void addPlayerChangeListener(PlayerChangeListener listener) {
 		playerChangeListeners.add(listener);
 		listener.onPlayerChange(players.get(currentPlayer));
 	}
 	
+	/**
+	 * Add a GameDoneListener to get notified when the game is done
+	 * @param listener The listener
+	 */
 	public void addGameDoneListener(GameDoneListener listener) {
 		gameDoneListeners.add(listener);
 	}
 	
-	public void addPlayerPickedUpListener(PlayerHadToPickUpListener listener) {
+	/**
+	 * Add a PlayerHadToPickedUpListener to get notified when a player had to pick up
+	 * @param listener The listener
+	 */
+	public void addPlayerHadToPickUpListener(PlayerHadToPickUpListener listener) {
 		playerHadToPickUpListeners.add(listener);
 	}
 	
+	/**
+	 * Go to the next player. Checks if the current player can finish their move first
+	 */
 	public void nextPlayer() {
 		Player current = players.get(currentPlayer);
 		if (current.getHasPlayedOrPickedUp()) {
-			current.setHasPlayedOrPickedUp(false);
 			checkTschauAndSepp(current);
 			if (current.getHandCards().size() == 0) {
 				endRound();
 				currentPlayer = 0;
 			} else {
-				int step;
-				CardValue lastPlayedValue = deck.getLastPlayedCard().getValue();
-				if (lastPlayedValue.equals(CardValue.EIGHT)
-						&& Settings.getInstance().isSpecial(CardValue.EIGHT)) {
-					step = 2;
-				} else {
-					step = 1;
-				}
+				int step = 1;
+				Card lastPlayedCard = deck.getLastPlayedCard();
 				
-				if (lastPlayedValue.equals(CardValue.TEN)
-						&& Settings.getInstance().isSpecial(CardValue.TEN)) {
-					isDirectionReversed = !isDirectionReversed;
-				}
-				
-				if (lastPlayedValue.equals(CardValue.SEVEN)
-						&& Settings.getInstance().isSpecial(CardValue.SEVEN)) {
-					sevenStackSize += 1;
-				} else {
-					for (int i = 0; i < sevenStackSize*2; i++) {
-						current.pickUpCard();
-						current.setHasPlayedOrPickedUp(false);
+				if (lastPlayedCard != null) {
+					CardValue lastPlayedValue = lastPlayedCard.getValue();
+					
+					if (current.getHasPlayed()) {
+						if (lastPlayedValue.equals(CardValue.EIGHT)
+								&& Settings.getInstance().isSpecial(CardValue.EIGHT)) {
+							step = 2;
+						}
+						
+						if (lastPlayedValue.equals(CardValue.TEN)
+								&& Settings.getInstance().isSpecial(CardValue.TEN)) {
+							isDirectionReversed = !isDirectionReversed;
+						}
 					}
-					sevenStackSize = 0;
+					
+					if (lastPlayedValue.equals(CardValue.SEVEN)
+							&& Settings.getInstance().isSpecial(CardValue.SEVEN)
+							&& current.getHasPlayed()) {
+						sevenStackSize += 1;
+					} else {
+						for (int i = 0; i < sevenStackSize*2; i++) {
+							current.pickUpCard();
+							current.setHasPlayedOrPickedUp(false);
+						}
+						sevenStackSize = 0;
+					}
 				}
 				
 				if (isDirectionReversed) {
@@ -94,10 +121,13 @@ public class Game {
 				}
 				
 				currentPlayer = (currentPlayer + step) % Settings.getInstance().getPlayerCount();
-				if (step < 0) {
+				if (currentPlayer < 0) {
 					currentPlayer += Settings.getInstance().getPlayerCount();
 				}
 			}
+
+			current.setHasPlayedOrPickedUp(false);
+			current.setHasPlayed(false);
 			
 			Player nextPlayer = players.get(currentPlayer);
 			playerChangeListeners.forEach((listener) -> listener.onPlayerChange(nextPlayer));
@@ -106,26 +136,49 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * Toggle wheter 'Tschau' is activated for the current player
+	 */
 	public void toggleTschau() {
 		isTschauChecked = !isTschauChecked;
 	}
 	
+	/**
+	 * Toggle wheter 'Sepp' is activated for the current player
+	 */
 	public void toggleSepp() {
 		isSeppChecked = !isSeppChecked;
 	}
 	
+	/**
+	 * Get the current player
+	 * @return The current player
+	 */
 	public Player getCurrentPlayer() {
 		return players.get(currentPlayer);
 	}
 	
+	/**
+	 * Get the player number of a player in human-readable format
+	 * @param p The player
+	 * @return The player's number
+	 */
 	public int getPlayerNumber(Player p) {
 		return players.indexOf(p) + 1;
 	}
 	
+	/**
+	 * Get the active card deck
+	 * @return The card deck
+	 */
 	public CardDeck getDeck() {
 		return deck;
 	}
 	
+	/**
+	 * Get a list of all players participating in this game
+	 * @return The list
+	 */
 	public List<Player> getPlayers() {
 		return players;
 	}

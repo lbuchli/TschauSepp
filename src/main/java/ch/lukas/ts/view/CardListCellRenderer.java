@@ -14,6 +14,10 @@ import javax.swing.ListCellRenderer;
 
 import ch.lukas.ts.model.Card;
 
+/**
+ * A list cell renderer for cards.
+ * @author lukas
+ */
 public class CardListCellRenderer implements ListCellRenderer<Card> {
 
 	@Override

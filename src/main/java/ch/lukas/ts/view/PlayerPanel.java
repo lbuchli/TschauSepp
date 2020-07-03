@@ -16,6 +16,10 @@ import ch.lukas.ts.control.PlayerController;
 import ch.lukas.ts.model.Card;
 import ch.lukas.ts.model.TschauSepp;
 
+/**
+ * The part of the game view that displays stuff relevant to a single player, e.g. hand cards.
+ * @author lukas
+ */
 public class PlayerPanel extends JPanel {
 
 	private static final long serialVersionUID = 5885829937259432735L;

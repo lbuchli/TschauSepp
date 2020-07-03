@@ -1,5 +1,9 @@
 package ch.lukas.ts.model;
 
+/**
+ * Represents one of four card colors.
+ * @author lukas
+ */
 public enum CardColor {
 	HEARTS("h"),
 	DIAMONDS("d"),
@@ -12,6 +16,10 @@ public enum CardColor {
 		this.imageID = imageID;
 	}
 	
+	/**
+	 * Get the ID of this CardValue (used for building the image path)
+	 * @return the ID
+	 */
 	public String getImageID() {
 		return imageID;
 	}

@@ -5,6 +5,10 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 
+/**
+ * A player that participates in a game.
+ * @author lukas
+ */
 public class Player extends DefaultListModel<Card> {
 	
 	private static final long serialVersionUID = 6132068650994968305L;
@@ -13,6 +17,7 @@ public class Player extends DefaultListModel<Card> {
 	private CardDeck deck;
 	private int score;
 	private boolean hasPlayedOrPickedUp;
+	private boolean hasPlayed;
 	
 	public Player(CardDeck deck) {
 		handCards = new ArrayList<Card>();
@@ -21,6 +26,9 @@ public class Player extends DefaultListModel<Card> {
 		hasPlayedOrPickedUp = false;
 	}
 	
+	/**
+	 * Pick up a card from the spare cards
+	 */
 	public void pickUpCard() {
 		if (!hasPlayedOrPickedUp) {
 			addElement(deck.pickUpCard());
@@ -28,18 +36,23 @@ public class Player extends DefaultListModel<Card> {
 		}
 	}
 	
+	/**
+	 * Play a hand card
+	 * @param index The hand card's index
+	 * @return Wheter it was possible to play that card
+	 */
 	public boolean playCard(int index) {
 		if (index < handCards.size() 
 				&& !hasPlayedOrPickedUp
 				&& deck.playCard(handCards.get(index))) {
 			
-			Card previous = deck.getLastPlayedCard();
 			Card played = handCards.remove(index);
 			fireIntervalRemoved(this, index, index);
 			
 			if (!played.getValue().equals(CardValue.ACE)
 					|| !Settings.getInstance().isSpecial(CardValue.ACE)) {
 				setHasPlayedOrPickedUp(true);
+				setHasPlayed(true);
 			}
 			
 			return true;
@@ -48,6 +61,10 @@ public class Player extends DefaultListModel<Card> {
 		return false;
 	}
 	
+	/**
+	 * End a round. Clears the hand cards and adds points
+	 * @param points The amount of points this player gained from the round
+	 */
 	public void endRound(int points) {
 		int handCardSize = handCards.size();
 		handCards.clear();
@@ -55,6 +72,10 @@ public class Player extends DefaultListModel<Card> {
 		score = getScore() + points;
 	}
 	
+	/**
+	 * Calculates this player's hand card score
+	 * @return The score
+	 */
 	public int calcHandScore() {
 		return handCards.parallelStream()
 				.mapToInt((c) -> c.getValue().getPoints())
@@ -101,5 +122,13 @@ public class Player extends DefaultListModel<Card> {
 
 	public void setHasPlayedOrPickedUp(boolean hasPlayedOrPickedUp) {
 		this.hasPlayedOrPickedUp = hasPlayedOrPickedUp;
+	}
+
+	public boolean getHasPlayed() {
+		return hasPlayed;
+	}
+
+	public void setHasPlayed(boolean hasPlayed) {
+		this.hasPlayed = hasPlayed;
 	}
 }

@@ -54,6 +54,9 @@ public class CardDeck {
 		return card;
 	}
 	
+	/**
+	 * Regenerate the card deck and mix it at random
+	 */
 	public void reshuffle() {
 		// generate cards
 		spentCards.clear();

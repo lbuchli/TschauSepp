@@ -1,35 +1,41 @@
 package ch.lukas.ts.view;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Font;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import ch.lukas.ts.control.GameController;
-import ch.lukas.ts.control.PlayerController;
 import ch.lukas.ts.model.TschauSepp;
 
+/**
+ * View of an active game, consisting of a player view and a card deck view.
+ * @author lukas
+ */
 public class GameView extends JPanel {
 
 	private static final long serialVersionUID = 6203069336898699210L;
 
-	private GameController controller;
 	private CardDeckPanel cardDeckPanel;
 	private PlayerPanel playerPanel;
 	
-	public GameView() {
+	public GameView(CardLayout layout) {
 		setLayout(new BorderLayout());
 		setBackground(Color.WHITE);
-		controller = new GameController();
 		
 		cardDeckPanel = new CardDeckPanel();
 		playerPanel = new PlayerPanel();
 		
 		add(cardDeckPanel, BorderLayout.NORTH);
 		add(playerPanel, BorderLayout.SOUTH);
+		
+		SwingUtilities.invokeLater(
+				() -> TschauSepp.getInstance().getCurrentGame().addGameDoneListener(
+						() -> {
+							layout.show(getParent(), "podium");
+							layout.removeLayoutComponent(this);
+						}));
 
 		/*
 		JLabel notice = new JLabel("", JLabel.CENTER);

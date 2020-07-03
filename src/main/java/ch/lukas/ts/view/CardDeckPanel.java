@@ -14,10 +14,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import ch.lukas.ts.control.DeckController;
+import ch.lukas.ts.control.GameController;
 import ch.lukas.ts.model.Card;
 import ch.lukas.ts.model.CardDeckListener;
 import ch.lukas.ts.model.TschauSepp;
 
+/**
+ * The panel containing the played and spare cards.
+ * @author lukas
+ */
 public class CardDeckPanel extends JPanel {
 
 	private static final long serialVersionUID = -420695756707545895L;
@@ -71,7 +76,7 @@ public class CardDeckPanel extends JPanel {
 		
 		DefaultListModel<String> scoreboardModel = new DefaultListModel<>();
 		JList<String> scoreboard = new JList<>(scoreboardModel);
-		controller.updateScoreboard(scoreboardModel);
+		GameController.updateScoreboard(scoreboardModel);
 		add(scoreboard, BorderLayout.EAST);
 	}
 }

@@ -11,6 +11,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import ch.lukas.ts.model.TschauSepp;
+
+/**
+ * The main menu.
+ * @author lukas
+ */
 public class MenuView extends JPanel {
 
 	private static final long serialVersionUID = -719202664457466158L;
@@ -26,7 +32,16 @@ public class MenuView extends JPanel {
 		
 		JButton startButton = new JButton("Start");
 		startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		startButton.addActionListener((e) -> layout.show(getParent(), "game"));
+		startButton.addActionListener((e) -> {
+			TschauSepp.getInstance().newGame();
+			GameView game = new GameView(layout);
+			getParent().add(game);
+			layout.addLayoutComponent(game, "game");
+			PodiumView podium = new PodiumView(layout);
+			getParent().add(podium);
+			layout.addLayoutComponent(podium, "podium");
+			layout.show(getParent(), "game");
+		});
 		
 		JButton settingsButton = new JButton("Einstellungen");
 		settingsButton.setAlignmentX(Component.CENTER_ALIGNMENT);

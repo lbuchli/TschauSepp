@@ -13,7 +13,7 @@ public class Main {
 
 	/**
 	 * The main method instantiates a "Tschau Sepp"-Window.
-	 * @param args
+	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
